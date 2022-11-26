@@ -1,0 +1,7 @@
+apiVersion: "k8s-crd-demo.shawnrong.github.com/v1alpha1"
+kind: "Project"
+metadata:
+  name: "example-project"
+  namespace: "default"
+spec:
+  replicas: 1
