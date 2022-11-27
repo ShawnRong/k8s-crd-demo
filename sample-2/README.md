@@ -16,7 +16,7 @@ kubebuilder init --domain shawnrong.github.io --repo shawnrong.github.io/example
 ```
 2. Create API
 ```shell
-kubebuilder create api --group shawnrong.github.io --version v1alpha1 --kind Website
+kubebuilder create api --group website --version v1alpha1 --kind Website
 ```
 
 ## Getting Started

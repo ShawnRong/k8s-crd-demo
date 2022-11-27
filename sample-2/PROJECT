@@ -3,4 +3,14 @@ layout:
 - go.kubebuilder.io/v3
 projectName: sample2
 repo: shawnrong.github.io/examplecontroller
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: shawnrong.github.io
+  group: website
+  kind: Website
+  path: shawnrong.github.io/examplecontroller/api/v1alpha1
+  version: v1alpha1
 version: "3"

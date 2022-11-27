@@ -1,0 +1,12 @@
+apiVersion: website.shawnrong.github.io/v1alpha1
+kind: Website
+metadata:
+  labels:
+    app.kubernetes.io/name: website
+    app.kubernetes.io/instance: website-sample
+    app.kubernetes.io/part-of: sample2
+    app.kuberentes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: sample2
+  name: website-sample
+spec:
+  # TODO(user): Add fields here
