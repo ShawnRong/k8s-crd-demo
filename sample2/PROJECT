@@ -1,0 +1,6 @@
+domain: shawnrong.github.io
+layout:
+- go.kubebuilder.io/v3
+projectName: sample2
+repo: shawnrong.github.io/examplecontroller
+version: "3"
