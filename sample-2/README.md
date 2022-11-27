@@ -18,6 +18,8 @@ kubebuilder init --domain shawnrong.github.io --repo shawnrong.github.io/example
 ```shell
 kubebuilder create api --group website --version v1alpha1 --kind Website
 ```
+3. 更新`types`的定义
+4. 
 
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.

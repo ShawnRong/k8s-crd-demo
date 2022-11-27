@@ -18,6 +18,12 @@ package controllers
 
 import (
 	"context"
+	appv1 "k8s.io/api/apps/v1"
+	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/types"
+	"shawnrong.github.io/examplecontroller/controllers/utils"
+	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -47,9 +53,54 @@ type WebsiteReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.13.0/pkg/reconcile
 func (r *WebsiteReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
+	log := log.FromContext(ctx)
 
-	// TODO(user): your logic here
+	//Load Resource by name
+	var website websitev1alpha1.Website
+	if err := r.Get(ctx, req.NamespacedName, &website); err != nil {
+		log.Error(err, "unable to fetch Website")
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
+
+	// Handle deployment
+	deployment := utils.NewDeployment(&website)
+	if err := controllerutil.SetControllerReference(&website, deployment, r.Scheme); err != nil {
+		return ctrl.Result{}, err
+	}
+
+	// Check if deployment exist, if not, then create
+	d := &appv1.Deployment{}
+	if err := r.Get(ctx, req.NamespacedName, d); err != nil {
+		if errors.IsNotFound(err) {
+			if err := r.Create(ctx, deployment); err != nil {
+				log.Error(err, "fail to create deployment")
+				return ctrl.Result{}, err
+			}
+		}
+	} else {
+		if err := r.Update(ctx, deployment); err != nil {
+			return ctrl.Result{}, err
+		}
+	}
+
+	// Create service
+	service := utils.NewService(&website)
+	if err := controllerutil.SetControllerReference(&website, service, r.Scheme); err != nil {
+		return ctrl.Result{}, err
+	}
+
+	s := &corev1.Service{}
+	if err := r.Get(ctx, types.NamespacedName{
+		Name:      website.Name,
+		Namespace: website.Namespace,
+	}, s); err != nil {
+		if errors.IsNotFound(err) {
+			if err := r.Create(ctx, service); err != nil {
+				log.Error(err, "fail to create service")
+				return ctrl.Result{}, err
+			}
+		}
+	}
 
 	return ctrl.Result{}, nil
 }
@@ -58,5 +109,7 @@ func (r *WebsiteReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 func (r *WebsiteReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&websitev1alpha1.Website{}).
+		Owns(&appv1.Deployment{}).
+		Owns(&corev1.Service{}).
 		Complete(r)
 }

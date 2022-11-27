@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Spec.DeploymentName}}
+  namespace: {{.ObjectMeta.Namespace}}
+  labels:
+    app: {{.Spec.DeploymentName}}
+spec:
+  replicas: {{.Spec.Replicas}}
+  selector:
+    matchLabels:
+      app: {{.Spec.DeploymentName}}
+  template:
+    metadata:
+      labels:
+        app: {{.Spec.DeploymentName}}
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: html
+              readOnly: true
+          ports:
+            - containerPort: 80
+        - name: git-sync
+          image: openweb/git-sync
+          env:
+            - name: GIT_SYNC_REPO
+              value: {{.Spec.GitRepo}}
+            - name: GIT_SYNC_DEST
+              value: "/gitrepo"
+            - name: GIT_SYNC_BRANCH
+              value: "master"
+            - name: GIT_SYNC_REV
+              value: "FETCH_HEAD"
+            - name: GIT_SYNC_WAIT
+              value: "3600"
+          volumeMounts:
+            - mountPath: /gitrepo
+              name: html
+      volumes:
+        - name: html
+          emptyDir:
+            medium: ""

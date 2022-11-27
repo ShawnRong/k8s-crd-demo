@@ -28,14 +28,16 @@ type WebsiteSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of Website. Edit website_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	GitRepo        string `json:"gitRepo"`
+	DeploymentName string `json:"deploymentName"`
+	Replicas       *int32 `json:"replicas"`
 }
 
 // WebsiteStatus defines the observed state of Website
 type WebsiteStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	AvailableReplicas int32 `json:"availableReplicas"`
 }
 
 //+kubebuilder:object:root=true
