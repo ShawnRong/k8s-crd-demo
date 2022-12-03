@@ -16,13 +16,15 @@ Example from [Programming Kubernetes](https://programming-kubernetes.info), crea
 ## Sample 5
 Example from [Programming Kubernetes](https://programming-kubernetes.info), create CNAT CRD with operator framework
 
-## Sample 6
+## Sample 6 (Skip)
+Similar like Sample 2
 Example from [operator-lesson-demo](https://github.com/baidingtech/operator-lesson-demo/blob/main/slide/10%20%E7%AC%AC10%E8%8A%82%EF%BC%9Aclient-go%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E4%B8%8A%EF%BC%9A%E9%9C%80%E6%B1%82%E4%BB%8B%E7%BB%8D.md)
 
-## Sample 7
+## Sample 7 (Skip)
 Example from [crd-example](https://github.com/opskumu/crd-example)
 
-## Sample 8
+## Sample 8 (Skip)
+Create a website operator
 Example from [k8s-crds](https://github.com/jungho/k8s-crds)
 
 ## Sample 9
