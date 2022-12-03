@@ -1,0 +1,19 @@
+domain: shawnrong.github.io
+layout:
+- go.kubebuilder.io/v3
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: sample-5
+repo: shawnrong.github.io/k8s-crd-demo
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: shawnrong.github.io
+  group: cnat
+  kind: At
+  path: shawnrong.github.io/k8s-crd-demo/api/v1alpha1
+  version: v1alpha1
+version: "3"
