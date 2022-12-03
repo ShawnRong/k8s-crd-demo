@@ -1,0 +1,13 @@
+apiVersion: cnat.shawnrong.github.io/v1alpha1
+kind: At
+metadata:
+  labels:
+    app.kubernetes.io/name: at
+    app.kubernetes.io/instance: at-sample
+    app.kubernetes.io/part-of: sample-4
+    app.kuberentes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: sample-4
+  name: at-sample
+spec:
+  schedule: "2022-12-03T06:59:00Z"
+  command: "echo YAY"
